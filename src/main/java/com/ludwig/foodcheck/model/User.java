@@ -1,9 +1,13 @@
 package com.ludwig.foodcheck.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,4 +29,8 @@ public class User {
 
     @Column(nullable = false)
     private String role;  // roles such as "USER" or "ADMIN"
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Recipe> recipes = new ArrayList<>();
+
 }
