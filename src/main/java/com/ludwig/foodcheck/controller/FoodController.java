@@ -1,6 +1,7 @@
 package com.ludwig.foodcheck.controller;
 
 
+import com.ludwig.foodcheck.dto.FoodDTO;
 import com.ludwig.foodcheck.model.Food;
 import com.ludwig.foodcheck.service.FoodService;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class FoodController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Food>> searchFoods(@RequestParam String query) {
+    public ResponseEntity<List<FoodDTO>> searchFoods(@RequestParam String query) {
         return ResponseEntity.ok(foodService.searchByName(query));
     }
 }
