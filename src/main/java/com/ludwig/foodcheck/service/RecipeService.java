@@ -54,6 +54,10 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public List<Recipe> getRecipeByUser(Long userId) {
+        return recipeRepository.findByUserId(userId);
+    }
+
     public RecipeResponse toDto(Recipe recipe) {
         List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
                 .map(ri -> new RecipeIngredientResponse(

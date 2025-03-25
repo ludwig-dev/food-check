@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
-
+    List<Recipe> findByUserId(Long userId);
 }

@@ -7,10 +7,9 @@ import com.ludwig.foodcheck.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/recipes")
@@ -27,5 +26,13 @@ public class RecipeController {
         Long userId = Long.parseLong(userDetails.getUsername());
         Recipe recipe = recipeService.createRecipe(request.getName(), request.getIngredients(), userId);
         return ResponseEntity.ok(recipeService.toDto(recipe));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RecipeResponse>> getMyRecipes(@AuthenticationPrincipal UserDetails userDetails){
+        Long userId = Long.parseLong(userDetails.getUsername());
+        List<Recipe> recipes = recipeService.getRecipeByUser(userId);
+        List<RecipeResponse> response = recipes.stream().map(recipeService::toDto).toList();
+        return ResponseEntity.ok(response);
     }
 }
