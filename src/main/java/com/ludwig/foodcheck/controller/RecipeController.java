@@ -2,6 +2,7 @@ package com.ludwig.foodcheck.controller;
 
 import com.ludwig.foodcheck.dto.recipe.CreateRecipeRequest;
 import com.ludwig.foodcheck.dto.recipe.RecipeResponse;
+import com.ludwig.foodcheck.dto.recipe.RecipeSummaryResponse;
 import com.ludwig.foodcheck.model.Recipe;
 import com.ludwig.foodcheck.service.RecipeService;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +30,21 @@ public class RecipeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RecipeResponse>> getMyRecipes(@AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<List<RecipeSummaryResponse>> getMyRecipes(@AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
         List<Recipe> recipes = recipeService.getRecipeByUser(userId);
-        List<RecipeResponse> response = recipes.stream().map(recipeService::toDto).toList();
+        List<RecipeSummaryResponse> response = recipes.stream()
+                .map(recipe -> new RecipeSummaryResponse(recipe.getId(), recipe.getName()))
+                .toList();
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeResponse> getRecipe(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return recipeService.getRecipeById(id, userId)
+                .map(recipeService::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
