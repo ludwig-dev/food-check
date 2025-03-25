@@ -4,10 +4,9 @@ package com.ludwig.foodcheck.controller;
 import com.ludwig.foodcheck.model.Food;
 import com.ludwig.foodcheck.service.FoodService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/food")
@@ -21,5 +20,10 @@ public class FoodController {
     @GetMapping("/{id}")
     public ResponseEntity<Food> getFoodById(@PathVariable int id) {
         return ResponseEntity.ok(foodService.getFoodById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Food>> searchFoods(@RequestParam String query) {
+        return ResponseEntity.ok(foodService.searchByName(query));
     }
 }
