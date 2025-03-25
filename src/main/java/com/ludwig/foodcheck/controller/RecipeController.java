@@ -26,7 +26,7 @@ public class RecipeController {
                                                        @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
         Recipe recipe = recipeService.createRecipe(request.getName(), request.getIngredients(), userId);
-        return ResponseEntity.ok(recipeService.toDto(recipe));
+        return ResponseEntity.ok(recipeService.convertToDTO(recipe));
     }
 
     @GetMapping
@@ -43,7 +43,7 @@ public class RecipeController {
     public ResponseEntity<RecipeResponse> getRecipe(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
         return recipeService.getRecipeById(id, userId)
-                .map(recipeService::toDto)
+                .map(recipeService::convertToDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

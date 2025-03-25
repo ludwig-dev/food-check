@@ -62,7 +62,7 @@ public class RecipeService {
         return recipeRepository.findByIdAndUserId(recipeId, userId);
     }
 
-    public RecipeResponse toDto(Recipe recipe) {
+    public RecipeResponse convertToDTO(Recipe recipe) {
         List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
                 .map(ri -> new RecipeIngredientResponse(
                         ri.getFood().getNummer(),
