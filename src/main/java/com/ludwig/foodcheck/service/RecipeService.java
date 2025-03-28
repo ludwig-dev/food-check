@@ -74,5 +74,26 @@ public class RecipeService {
         return new RecipeResponse(recipe.getId(), recipe.getName(), ingredients);
     }
 
+    public Recipe addIngredient(Long recipeId, RecipeIngredientRequest request, Long userId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        Food food = foodRepository.findById(request.getFoodId())
+                .orElseThrow(() -> new RuntimeException("Food not found"));
+
+        boolean alreadyExists = recipe.getIngredients().stream()
+                .anyMatch(i -> i.getFood().getNummer() == request.getFoodId());
+
+        if (!alreadyExists) {
+            RecipeIngredient ingredient = new RecipeIngredient();
+            ingredient.setFood(food);
+            ingredient.setAmountInGrams(request.getAmountInGrams());
+            ingredient.setRecipe(recipe);
+            recipe.getIngredients().add(ingredient);
+        }
+
+        return recipeRepository.save(recipe);
+    }
+
 
 }
