@@ -95,5 +95,14 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public Recipe removeIngredient(Long recipeId, int foodId, Long userId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        recipe.getIngredients().removeIf(i -> i.getFood().getNummer() == foodId);
+        return recipeRepository.save(recipe);
+    }
+
+
 
 }

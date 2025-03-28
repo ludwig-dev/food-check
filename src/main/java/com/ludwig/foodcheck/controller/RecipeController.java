@@ -73,5 +73,17 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.convertToDTO(updated));
     }
 
+    @DeleteMapping("/{id}/ingredients/{foodId}")
+    public ResponseEntity<RecipeResponse> removeIngredient(
+            @PathVariable Long id,
+            @PathVariable int foodId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long userId = Long.parseLong(userDetails.getUsername());
+        Recipe updated = recipeService.removeIngredient(id, foodId, userId);
+        return ResponseEntity.ok(recipeService.convertToDTO(updated));
+    }
+
+
 
 }
