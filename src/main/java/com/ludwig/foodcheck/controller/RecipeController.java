@@ -1,9 +1,11 @@
 package com.ludwig.foodcheck.controller;
 
+import com.ludwig.foodcheck.dto.nutrition.NutritionResultDTO;
 import com.ludwig.foodcheck.dto.recipe.CreateRecipeRequest;
 import com.ludwig.foodcheck.dto.recipe.RecipeResponse;
 import com.ludwig.foodcheck.dto.recipe.RecipeSummaryResponse;
 import com.ludwig.foodcheck.model.Recipe;
+import com.ludwig.foodcheck.service.NutritionService;
 import com.ludwig.foodcheck.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,9 +18,11 @@ import java.util.List;
 @RequestMapping("/api/recipes")
 public class RecipeController {
     private final RecipeService recipeService;
+    private final NutritionService nutritionService;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, NutritionService nutritionService) {
         this.recipeService = recipeService;
+        this.nutritionService = nutritionService;
     }
 
     @PostMapping
@@ -47,4 +51,14 @@ public class RecipeController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{id}/nutrition")
+    public ResponseEntity<List<NutritionResultDTO>> getNutrition(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return ResponseEntity.ok(nutritionService.calculateNutrition(id, userId));
+    }
+
 }

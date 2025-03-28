@@ -6,7 +6,6 @@ import com.ludwig.foodcheck.repository.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +27,7 @@ public class FoodService {
                 .collect(Collectors.toList());
     }
 
-    public FoodDTO convertToDTO(Food food) {
+    private FoodDTO convertToDTO(Food food) {
         return new FoodDTO(food.getNummer(), food.getNamn());
     }
 }
