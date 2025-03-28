@@ -84,6 +84,15 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.convertToDTO(updated));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id,
+                                             @AuthenticationPrincipal UserDetails userDetails) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        recipeService.deleteRecipe(id, userId);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
 }

@@ -103,6 +103,10 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public void deleteRecipe(Long recipeId, Long userId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new RuntimeException("Recept ej hittat"));
 
-
+        recipeRepository.delete(recipe);
+    }
 }
