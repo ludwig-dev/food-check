@@ -1,10 +1,7 @@
 package com.ludwig.foodcheck.controller;
 
 import com.ludwig.foodcheck.dto.nutrition.NutritionResultDTO;
-import com.ludwig.foodcheck.dto.recipe.CreateRecipeRequest;
-import com.ludwig.foodcheck.dto.recipe.RecipeIngredientRequest;
-import com.ludwig.foodcheck.dto.recipe.RecipeResponse;
-import com.ludwig.foodcheck.dto.recipe.RecipeSummaryResponse;
+import com.ludwig.foodcheck.dto.recipe.*;
 import com.ludwig.foodcheck.model.Recipe;
 import com.ludwig.foodcheck.service.NutritionService;
 import com.ludwig.foodcheck.service.RecipeService;
@@ -92,7 +89,15 @@ public class RecipeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}/ingredients/{foodId}")
+    public ResponseEntity<RecipeResponse> updateIngredientAmount(
+            @PathVariable Long id,
+            @PathVariable int foodId,
+            @RequestBody UpdateIngredientRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
 
-
-
+        Long userId = Long.parseLong(userDetails.getUsername());
+        Recipe updated = recipeService.updateIngredientAmount(id, foodId, request.getNewAmountInGrams(), userId);
+        return ResponseEntity.ok(recipeService.convertToDTO(updated));
+    }
 }

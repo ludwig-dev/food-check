@@ -109,4 +109,19 @@ public class RecipeService {
 
         recipeRepository.delete(recipe);
     }
+
+    public Recipe updateIngredientAmount(Long recipeId, int foodId, double newAmount, Long userId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+
+        RecipeIngredient ingredient = recipe.getIngredients().stream()
+                .filter(ri -> ri.getFood().getNummer() == foodId)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+
+        ingredient.setAmountInGrams(newAmount);
+        return recipeRepository.save(recipe);
+    }
+
+
 }
