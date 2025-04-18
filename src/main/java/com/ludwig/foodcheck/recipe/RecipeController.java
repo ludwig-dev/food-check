@@ -42,10 +42,8 @@ public class RecipeController {
     @GetMapping("/{id}")
     public ResponseEntity<RecipeResponse> getRecipe(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
-        return recipeService.getRecipeById(id, userId)
-                .map(recipeService::convertToDTO)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        RecipeResponse response = recipeService.getRecipeById(id, userId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}/nutrition")
