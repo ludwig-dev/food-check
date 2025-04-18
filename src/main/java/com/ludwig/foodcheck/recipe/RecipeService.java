@@ -84,12 +84,12 @@ public class RecipeService {
         return convertToDTO(recipeRepository.save(recipe));
     }
 
-    public Recipe removeIngredient(Long recipeId, int foodId, Long userId) {
+    public RecipeResponse removeIngredient(Long recipeId, int foodId, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
         recipe.getIngredients().removeIf(i -> i.getFood().getNummer() == foodId);
-        return recipeRepository.save(recipe);
+        return convertToDTO(recipeRepository.save(recipe));
     }
 
     public void deleteRecipe(Long recipeId, Long userId) {

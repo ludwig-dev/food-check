@@ -69,8 +69,7 @@ public class RecipeController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long userId = Long.parseLong(userDetails.getUsername());
-        Recipe updated = recipeService.removeIngredient(id, foodId, userId);
-        return ResponseEntity.ok(recipeService.convertToDTO(updated));
+        return ResponseEntity.ok(recipeService.removeIngredient(id, foodId, userId));
     }
 
     @DeleteMapping("/{id}")
