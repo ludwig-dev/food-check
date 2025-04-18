@@ -109,8 +109,6 @@ public class RecipeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + foodId + " not found"));
 
         ingredient.setAmountInGrams(newAmount);
-        return convertToDTO(recipe);
+        return convertToDTO(recipeRepository.save(recipe));
     }
-
-
 }
