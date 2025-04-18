@@ -46,7 +46,8 @@ public class RecipeService {
     }
 
     public RecipeResponse getRecipeById(Long recipeId, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId).orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
         return convertToDTO(recipe);
     }
 
@@ -64,10 +65,10 @@ public class RecipeService {
 
     public Recipe addIngredient(Long recipeId, RecipeIngredientRequest request, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
         Food food = foodRepository.findById(request.getFoodId())
-                .orElseThrow(() -> new RuntimeException("Food not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + request.getFoodId() + " not found"));
 
         boolean alreadyExists = recipe.getIngredients().stream()
                 .anyMatch(i -> i.getFood().getNummer() == request.getFoodId());
