@@ -70,11 +70,15 @@ public class RecipeService {
         Food food = foodRepository.findById(request.getFoodId())
                 .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + request.getFoodId() + " not found"));
 
-        boolean exists = recipe.getIngredients().stream()
-                .anyMatch(i -> i.getFood().getNummer() == request.getFoodId());
+        RecipeIngredient ingredient = recipe.getIngredients().stream()
+                .filter(ing -> ing.getFood().getNummer() == request.getFoodId())
+                .findFirst()
+                .orElse(null);
 
-        if (!exists) {
-            RecipeIngredient ingredient = new RecipeIngredient();
+        if (ingredient != null) {
+            ingredient.setAmountInGrams(request.getAmountInGrams());
+        } else {
+            ingredient = new RecipeIngredient();
             ingredient.setFood(food);
             ingredient.setAmountInGrams(request.getAmountInGrams());
             ingredient.setRecipe(recipe);
