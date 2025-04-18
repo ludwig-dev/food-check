@@ -27,7 +27,7 @@ public class RecipeService {
         this.foodRepository = foodRepository;
     }
 
-    public Recipe createRecipe(String recipeName, Long userId) {
+    public RecipeResponse createRecipe(String recipeName, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + "not found"));
 
@@ -37,7 +37,7 @@ public class RecipeService {
 
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
         recipe.setIngredients(recipeIngredients);
-        return recipeRepository.save(recipe);
+        return convertToDTO(recipeRepository.save(recipe));
     }
 
     public List<RecipeSummaryResponse> getRecipeByUser(Long userId) {

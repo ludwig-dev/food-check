@@ -25,8 +25,7 @@ public class RecipeController {
     public ResponseEntity<RecipeResponse> createRecipe(@RequestBody CreateRecipeRequest request,
                                                        @AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
-        Recipe recipe = recipeService.createRecipe(request.getName(), userId);
-        return ResponseEntity.ok(recipeService.convertToDTO(recipe));
+        return ResponseEntity.ok(recipeService.createRecipe(request.getName(), userId));
     }
 
     @GetMapping
