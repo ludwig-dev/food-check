@@ -1,10 +1,8 @@
-package com.ludwig.foodcheck.controller;
+package com.ludwig.foodcheck.recipe;
 
 import com.ludwig.foodcheck.dto.nutrition.NutritionResultDTO;
-import com.ludwig.foodcheck.dto.recipe.*;
-import com.ludwig.foodcheck.model.Recipe;
+import com.ludwig.foodcheck.recipe.dto.*;
 import com.ludwig.foodcheck.service.NutritionService;
-import com.ludwig.foodcheck.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

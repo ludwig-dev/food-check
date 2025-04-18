@@ -1,6 +1,5 @@
-package com.ludwig.foodcheck.repository;
+package com.ludwig.foodcheck.recipe;
 
-import com.ludwig.foodcheck.model.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

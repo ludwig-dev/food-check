@@ -1,4 +1,4 @@
-package com.ludwig.foodcheck.dto.recipe;
+package com.ludwig.foodcheck.recipe.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

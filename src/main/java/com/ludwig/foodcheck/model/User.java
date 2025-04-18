@@ -1,6 +1,6 @@
 package com.ludwig.foodcheck.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ludwig.foodcheck.recipe.Recipe;
 import lombok.Getter;
 import lombok.Setter;
 

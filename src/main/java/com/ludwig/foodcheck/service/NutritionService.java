@@ -2,10 +2,9 @@ package com.ludwig.foodcheck.service;
 
 import com.ludwig.foodcheck.dto.nutrition.NaringsvardeApiResponse;
 import com.ludwig.foodcheck.dto.nutrition.NutritionResultDTO;
-import com.ludwig.foodcheck.model.Recipe;
-import com.ludwig.foodcheck.model.RecipeIngredient;
-import com.ludwig.foodcheck.repository.RecipeRepository;
-import lombok.RequiredArgsConstructor;
+import com.ludwig.foodcheck.recipe.Recipe;
+import com.ludwig.foodcheck.recipe.RecipeIngredient;
+import com.ludwig.foodcheck.recipe.RecipeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
