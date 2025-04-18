@@ -1,9 +1,8 @@
-package com.ludwig.foodcheck.controller;
+package com.ludwig.foodcheck.auth;
 
 import com.ludwig.foodcheck.users.User;
 import com.ludwig.foodcheck.users.UserService;
 import com.ludwig.foodcheck.util.EmailValidator;
-import com.ludwig.foodcheck.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

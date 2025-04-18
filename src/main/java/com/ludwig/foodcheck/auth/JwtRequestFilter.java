@@ -1,6 +1,5 @@
-package com.ludwig.foodcheck.filter;
+package com.ludwig.foodcheck.auth;
 
-import com.ludwig.foodcheck.util.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.ludwig.foodcheck.util;
+package com.ludwig.foodcheck.auth;
 
 import com.ludwig.foodcheck.users.User;
 import io.jsonwebtoken.Claims;

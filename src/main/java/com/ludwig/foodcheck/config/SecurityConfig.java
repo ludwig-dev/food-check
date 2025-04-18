@@ -1,7 +1,7 @@
 package com.ludwig.foodcheck.config;
 
-import com.ludwig.foodcheck.filter.JwtRequestFilter;
-import com.ludwig.foodcheck.util.JwtUtil;
+import com.ludwig.foodcheck.auth.JwtRequestFilter;
+import com.ludwig.foodcheck.auth.JwtUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
