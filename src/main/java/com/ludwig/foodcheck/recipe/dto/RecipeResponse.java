@@ -15,5 +15,6 @@ public class RecipeResponse {
     private Long id;
     private String name;
     private List<RecipeIngredientResponse> ingredients;
+    private boolean isPublic;
 }
 

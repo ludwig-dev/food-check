@@ -60,7 +60,7 @@ public class RecipeService {
                 ))
                 .toList();
 
-        return new RecipeResponse(recipe.getId(), recipe.getName(), ingredients);
+        return new RecipeResponse(recipe.getId(), recipe.getName(), ingredients, recipe.isPublic());
     }
 
     public RecipeResponse addIngredientToRecipe(Long recipeId, RecipeIngredientRequest request, Long userId) {
