@@ -1,4 +1,4 @@
-package com.ludwig.foodcheck.dto.nutrition;
+package com.ludwig.foodcheck.nutrition;
 
 import lombok.Getter;
 import lombok.Setter;

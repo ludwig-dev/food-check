@@ -1,7 +1,5 @@
-package com.ludwig.foodcheck.service;
+package com.ludwig.foodcheck.nutrition;
 
-import com.ludwig.foodcheck.dto.nutrition.NaringsvardeApiResponse;
-import com.ludwig.foodcheck.dto.nutrition.NutritionResultDTO;
 import com.ludwig.foodcheck.recipe.Recipe;
 import com.ludwig.foodcheck.recipe.RecipeIngredient;
 import com.ludwig.foodcheck.recipe.RecipeRepository;
