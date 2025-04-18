@@ -1,5 +1,6 @@
 package com.ludwig.foodcheck.food;
 
+import com.ludwig.foodcheck.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class FoodService {
 
     public Food getFoodById(int id) {
         return foodRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Food not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Food not found with id: " + id));
     }
 
     public List<FoodDTO> searchByName(String query) {
