@@ -94,7 +94,7 @@ public class RecipeService {
 
     public void deleteRecipe(Long recipeId, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new RuntimeException("Recept ej hittat"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
         recipeRepository.delete(recipe);
     }
