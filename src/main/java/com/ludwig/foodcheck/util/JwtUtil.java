@@ -1,6 +1,6 @@
 package com.ludwig.foodcheck.util;
 
-import com.ludwig.foodcheck.model.User;
+import com.ludwig.foodcheck.users.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;

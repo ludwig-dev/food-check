@@ -1,7 +1,7 @@
 package com.ludwig.foodcheck.controller;
 
-import com.ludwig.foodcheck.model.User;
-import com.ludwig.foodcheck.service.UserService;
+import com.ludwig.foodcheck.users.User;
+import com.ludwig.foodcheck.users.UserService;
 import com.ludwig.foodcheck.util.EmailValidator;
 import com.ludwig.foodcheck.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;

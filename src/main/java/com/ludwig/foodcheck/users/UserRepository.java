@@ -1,6 +1,5 @@
-package com.ludwig.foodcheck.repository;
+package com.ludwig.foodcheck.users;
 
-import com.ludwig.foodcheck.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

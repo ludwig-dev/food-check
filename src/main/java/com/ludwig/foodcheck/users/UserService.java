@@ -1,8 +1,5 @@
-package com.ludwig.foodcheck.service;
+package com.ludwig.foodcheck.users;
 
-import com.ludwig.foodcheck.dto.UserDTO;
-import com.ludwig.foodcheck.model.User;
-import com.ludwig.foodcheck.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

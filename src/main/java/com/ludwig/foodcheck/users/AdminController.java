@@ -1,7 +1,5 @@
-package com.ludwig.foodcheck.controller;
+package com.ludwig.foodcheck.users;
 
-import com.ludwig.foodcheck.dto.UserDTO;
-import com.ludwig.foodcheck.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

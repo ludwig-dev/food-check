@@ -1,7 +1,5 @@
-package com.ludwig.foodcheck.controller;
+package com.ludwig.foodcheck.users;
 
-import com.ludwig.foodcheck.dto.UserDTO;
-import com.ludwig.foodcheck.service.UserService;
 import com.ludwig.foodcheck.util.EmailValidator;
 import com.ludwig.foodcheck.util.JwtUtil;
 import org.springframework.http.HttpStatus;
