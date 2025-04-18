@@ -1,5 +1,6 @@
 package com.ludwig.foodcheck.recipe;
 
+import com.ludwig.foodcheck.exception.ResourceNotFoundException;
 import com.ludwig.foodcheck.recipe.dto.RecipeIngredientRequest;
 import com.ludwig.foodcheck.recipe.dto.RecipeIngredientResponse;
 import com.ludwig.foodcheck.recipe.dto.RecipeResponse;
@@ -25,28 +26,15 @@ public class RecipeService {
         this.foodRepository = foodRepository;
     }
 
-    public Recipe createRecipe(String recipeName, List<RecipeIngredientRequest> ingredients, Long userId) {
+    public Recipe createRecipe(String recipeName, Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User does not exist"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with ID: " + userId + "not found"));
 
         Recipe recipe = new Recipe();
         recipe.setName(recipeName);
         recipe.setUser(user);
 
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
-        for (RecipeIngredientRequest ing : ingredients) {
-            Optional<Food> food = foodRepository.findById(ing.getFoodId());
-            if (food.isEmpty())
-                throw new RuntimeException("Livsmedel with nummer " + ing.getFoodId() + " does not exist");
-
-            RecipeIngredient ri = new RecipeIngredient();
-            ri.setFood(food.get());
-            ri.setAmountInGrams(ing.getAmountInGrams());
-            ri.setRecipe(recipe);
-
-            recipeIngredients.add(ri);
-        }
-
         recipe.setIngredients(recipeIngredients);
         return recipeRepository.save(recipe);
     }
