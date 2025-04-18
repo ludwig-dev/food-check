@@ -86,7 +86,7 @@ public class RecipeService {
 
     public Recipe removeIngredient(Long recipeId, int foodId, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
         recipe.getIngredients().removeIf(i -> i.getFood().getNummer() == foodId);
         return recipeRepository.save(recipe);
@@ -101,12 +101,12 @@ public class RecipeService {
 
     public Recipe updateIngredientAmount(Long recipeId, int foodId, double newAmount, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
         RecipeIngredient ingredient = recipe.getIngredients().stream()
                 .filter(ri -> ri.getFood().getNummer() == foodId)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Ingredient not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + foodId + " not found"));
 
         ingredient.setAmountInGrams(newAmount);
         return recipeRepository.save(recipe);
