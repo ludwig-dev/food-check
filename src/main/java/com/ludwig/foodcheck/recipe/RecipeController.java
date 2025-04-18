@@ -32,11 +32,7 @@ public class RecipeController {
     @GetMapping
     public ResponseEntity<List<RecipeSummaryResponse>> getMyRecipes(@AuthenticationPrincipal UserDetails userDetails) {
         Long userId = Long.parseLong(userDetails.getUsername());
-        List<Recipe> recipes = recipeService.getRecipeByUser(userId);
-        List<RecipeSummaryResponse> response = recipes.stream()
-                .map(recipe -> new RecipeSummaryResponse(recipe.getId(), recipe.getName()))
-                .toList();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(recipeService.getRecipeByUser(userId));
     }
 
     @GetMapping("/{id}")
