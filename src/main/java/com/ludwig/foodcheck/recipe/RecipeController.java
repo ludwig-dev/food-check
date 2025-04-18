@@ -58,8 +58,8 @@ public class RecipeController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long userId = Long.parseLong(userDetails.getUsername());
-        Recipe updated = recipeService.addIngredient(id, request, userId);
-        return ResponseEntity.ok(recipeService.convertToDTO(updated));
+        RecipeResponse response = recipeService.addIngredientToRecipe(id, request, userId);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}/ingredients/{foodId}")
