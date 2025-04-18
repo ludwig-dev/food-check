@@ -3,9 +3,9 @@ package com.ludwig.foodcheck.recipe;
 import com.ludwig.foodcheck.recipe.dto.RecipeIngredientRequest;
 import com.ludwig.foodcheck.recipe.dto.RecipeIngredientResponse;
 import com.ludwig.foodcheck.recipe.dto.RecipeResponse;
-import com.ludwig.foodcheck.model.Food;
+import com.ludwig.foodcheck.food.Food;
 import com.ludwig.foodcheck.model.User;
-import com.ludwig.foodcheck.repository.FoodRepository;
+import com.ludwig.foodcheck.food.FoodRepository;
 import com.ludwig.foodcheck.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

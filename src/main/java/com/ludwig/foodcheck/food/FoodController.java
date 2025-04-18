@@ -1,9 +1,6 @@
-package com.ludwig.foodcheck.controller;
+package com.ludwig.foodcheck.food;
 
 
-import com.ludwig.foodcheck.dto.FoodDTO;
-import com.ludwig.foodcheck.model.Food;
-import com.ludwig.foodcheck.service.FoodService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

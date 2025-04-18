@@ -1,4 +1,4 @@
-package com.ludwig.foodcheck.model;
+package com.ludwig.foodcheck.food;
 
 import lombok.Getter;
 import lombok.Setter;

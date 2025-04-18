@@ -1,8 +1,5 @@
-package com.ludwig.foodcheck.service;
+package com.ludwig.foodcheck.food;
 
-import com.ludwig.foodcheck.dto.FoodDTO;
-import com.ludwig.foodcheck.model.Food;
-import com.ludwig.foodcheck.repository.FoodRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

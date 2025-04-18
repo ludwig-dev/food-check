@@ -1,6 +1,6 @@
 package com.ludwig.foodcheck.recipe;
 
-import com.ludwig.foodcheck.model.Food;
+import com.ludwig.foodcheck.food.Food;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
