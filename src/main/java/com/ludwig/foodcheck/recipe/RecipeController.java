@@ -89,4 +89,10 @@ public class RecipeController {
         Long userId = Long.parseLong(userDetails.getUsername());
         return ResponseEntity.ok(recipeService.updateIngredientAmount(id, foodId, request.getNewAmountInGrams(), userId));
     }
+
+    @PutMapping("/{id}/publish")
+    public ResponseEntity<RecipeResponse> setRecipeToPublic(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return ResponseEntity.ok(recipeService.setRecipeToPublic(id, userId));
+    }
 }

@@ -115,4 +115,11 @@ public class RecipeService {
         ingredient.setAmountInGrams(newAmount);
         return convertToDTO(recipeRepository.save(recipe));
     }
+
+    public RecipeResponse setRecipeToPublic(Long recipeId, Long userId) {
+        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        recipe.setPublic(true);
+        return convertToDTO(recipeRepository.save(recipe));
+    }
 }
