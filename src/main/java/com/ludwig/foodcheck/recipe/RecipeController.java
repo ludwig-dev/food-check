@@ -88,7 +88,6 @@ public class RecipeController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long userId = Long.parseLong(userDetails.getUsername());
-        Recipe updated = recipeService.updateIngredientAmount(id, foodId, request.getNewAmountInGrams(), userId);
-        return ResponseEntity.ok(recipeService.convertToDTO(updated));
+        return ResponseEntity.ok(recipeService.updateIngredientAmount(id, foodId, request.getNewAmountInGrams(), userId));
     }
 }

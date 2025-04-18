@@ -99,7 +99,7 @@ public class RecipeService {
         recipeRepository.delete(recipe);
     }
 
-    public Recipe updateIngredientAmount(Long recipeId, int foodId, double newAmount, Long userId) {
+    public RecipeResponse updateIngredientAmount(Long recipeId, int foodId, double newAmount, Long userId) {
         Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
 
@@ -109,7 +109,7 @@ public class RecipeService {
                 .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + foodId + " not found"));
 
         ingredient.setAmountInGrams(newAmount);
-        return recipeRepository.save(recipe);
+        return convertToDTO(recipe);
     }
 
 
