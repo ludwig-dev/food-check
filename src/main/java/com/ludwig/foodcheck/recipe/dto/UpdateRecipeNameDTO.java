@@ -1,0 +1,12 @@
+package com.ludwig.foodcheck.recipe.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class UpdateRecipeNameDTO {
+    private String name;
+}
