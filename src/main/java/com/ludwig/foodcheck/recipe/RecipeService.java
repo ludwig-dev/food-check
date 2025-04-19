@@ -46,26 +46,12 @@ public class RecipeService {
     }
 
     public RecipeResponse getRecipeById(Long recipeId, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = findRecipeById(recipeId, userId);
         return convertToDTO(recipe);
     }
 
-    public RecipeResponse convertToDTO(Recipe recipe) {
-        List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
-                .map(ri -> new RecipeIngredientResponse(
-                        ri.getFood().getNummer(),
-                        ri.getFood().getNamn(),
-                        ri.getAmountInGrams()
-                ))
-                .toList();
-
-        return new RecipeResponse(recipe.getId(), recipe.getName(), ingredients, recipe.isPublic());
-    }
-
     public RecipeResponse addIngredientToRecipe(Long recipeId, RecipeIngredientRequest request, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = findRecipeById(recipeId, userId);
 
         Food food = foodRepository.findById(request.getFoodId())
                 .orElseThrow(() -> new ResourceNotFoundException("Food with ID: " + request.getFoodId() + " not found"));
@@ -89,23 +75,19 @@ public class RecipeService {
     }
 
     public RecipeResponse removeIngredient(Long recipeId, int foodId, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = findRecipeById(recipeId, userId);
 
         recipe.getIngredients().removeIf(i -> i.getFood().getNummer() == foodId);
         return convertToDTO(recipeRepository.save(recipe));
     }
 
     public void deleteRecipe(Long recipeId, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
-
+        Recipe recipe = findRecipeById(recipeId, userId);
         recipeRepository.delete(recipe);
     }
 
     public RecipeResponse updateIngredientAmount(Long recipeId, int foodId, double newAmount, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = findRecipeById(recipeId, userId);
 
         RecipeIngredient ingredient = recipe.getIngredients().stream()
                 .filter(ri -> ri.getFood().getNummer() == foodId)
@@ -117,9 +99,25 @@ public class RecipeService {
     }
 
     public RecipeResponse setRecipeToPublic(Long recipeId, Long userId) {
-        Recipe recipe = recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
+        Recipe recipe = findRecipeById(recipeId, userId);
         recipe.setPublic(true);
         return convertToDTO(recipeRepository.save(recipe));
+    }
+
+    private RecipeResponse convertToDTO(Recipe recipe) {
+        List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
+                .map(ri -> new RecipeIngredientResponse(
+                        ri.getFood().getNummer(),
+                        ri.getFood().getNamn(),
+                        ri.getAmountInGrams()
+                ))
+                .toList();
+
+        return new RecipeResponse(recipe.getId(), recipe.getName(), ingredients, recipe.isPublic());
+    }
+
+    private Recipe findRecipeById(Long recipeId, Long userId) {
+        return recipeRepository.findByIdAndUserId(recipeId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe with ID: " + recipeId + " not found"));
     }
 }
