@@ -110,6 +110,12 @@ public class RecipeService {
                 .toList();
     }
 
+    public RecipeResponse getPublicRecipe(Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .filter(Recipe::isPublic).orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
+        return convertToDTO(recipe);
+    }
+
     private RecipeResponse convertToDTO(Recipe recipe) {
         List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
                 .map(ri -> new RecipeIngredientResponse(

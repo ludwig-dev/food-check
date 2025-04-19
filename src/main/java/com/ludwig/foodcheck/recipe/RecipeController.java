@@ -100,4 +100,10 @@ public class RecipeController {
     public ResponseEntity<List<RecipeSummaryResponse>> getAllPublishedRecipes() {
         return ResponseEntity.ok(recipeService.getPublicRecipes());
     }
+
+    @GetMapping("/public/{id}")
+    public ResponseEntity<RecipeResponse> getPublicRecipe(@PathVariable Long id) {
+        RecipeResponse response = recipeService.getPublicRecipe(id);
+        return ResponseEntity.ok(response);
+    }
 }
