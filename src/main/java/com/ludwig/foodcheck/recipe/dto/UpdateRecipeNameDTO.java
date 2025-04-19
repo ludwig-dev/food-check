@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateRecipeNameDTO {
+    private Long id;
     private String name;
 }

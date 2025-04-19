@@ -100,7 +100,7 @@ public class RecipeService {
         Recipe recipe = findRecipeById(recipeId, userId);
         recipe.setName(newName);
         recipeRepository.save(recipe);
-        return new UpdateRecipeNameDTO(newName);
+        return new UpdateRecipeNameDTO(recipe.getId(), newName);
     }
 
     public RecipeResponse setRecipeToPublic(Long recipeId, Long userId) {
