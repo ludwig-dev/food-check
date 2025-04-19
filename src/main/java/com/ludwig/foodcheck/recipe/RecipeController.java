@@ -95,4 +95,9 @@ public class RecipeController {
         Long userId = Long.parseLong(userDetails.getUsername());
         return ResponseEntity.ok(recipeService.setRecipeToPublic(id, userId));
     }
+
+    @GetMapping("/public")
+    public ResponseEntity<List<RecipeSummaryResponse>> getAllPublishedRecipes() {
+        return ResponseEntity.ok(recipeService.getPublicRecipes());
+    }
 }
