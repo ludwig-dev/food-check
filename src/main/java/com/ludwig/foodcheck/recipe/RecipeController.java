@@ -100,22 +100,4 @@ public class RecipeController {
         UpdateRecipeNameDTO updated = recipeService.updateRecipeName(id, request.getName(), userId);
         return ResponseEntity.ok(updated);
     }
-
-
-    @PutMapping("/{id}/publish")
-    public ResponseEntity<RecipeResponse> setRecipeToPublic(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
-        Long userId = Long.parseLong(userDetails.getUsername());
-        return ResponseEntity.ok(recipeService.setRecipeToPublic(id, userId));
-    }
-
-    @GetMapping("/public")
-    public ResponseEntity<List<RecipeSummaryResponse>> getAllPublishedRecipes() {
-        return ResponseEntity.ok(recipeService.getPublicRecipes());
-    }
-
-    @GetMapping("/public/{id}")
-    public ResponseEntity<RecipeResponse> getPublicRecipe(@PathVariable Long id) {
-        RecipeResponse response = recipeService.getPublicRecipe(id);
-        return ResponseEntity.ok(response);
-    }
 }
