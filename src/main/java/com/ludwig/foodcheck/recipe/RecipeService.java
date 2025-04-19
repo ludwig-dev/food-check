@@ -1,14 +1,12 @@
 package com.ludwig.foodcheck.recipe;
 
 import com.ludwig.foodcheck.exception.ResourceNotFoundException;
-import com.ludwig.foodcheck.recipe.dto.RecipeIngredientRequest;
-import com.ludwig.foodcheck.recipe.dto.RecipeIngredientResponse;
-import com.ludwig.foodcheck.recipe.dto.RecipeResponse;
+import com.ludwig.foodcheck.recipe.dto.*;
 import com.ludwig.foodcheck.food.Food;
-import com.ludwig.foodcheck.recipe.dto.RecipeSummaryResponse;
 import com.ludwig.foodcheck.users.User;
 import com.ludwig.foodcheck.food.FoodRepository;
 import com.ludwig.foodcheck.users.UserRepository;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -96,6 +94,13 @@ public class RecipeService {
 
         ingredient.setAmountInGrams(newAmount);
         return convertToDTO(recipeRepository.save(recipe));
+    }
+
+    public UpdateRecipeNameDTO updateRecipeName(Long recipeId, String newName, Long userId) {
+        Recipe recipe = findRecipeById(recipeId, userId);
+        recipe.setName(newName);
+        recipeRepository.save(recipe);
+        return new UpdateRecipeNameDTO(newName);
     }
 
     public RecipeResponse setRecipeToPublic(Long recipeId, Long userId) {
