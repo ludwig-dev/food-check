@@ -104,6 +104,12 @@ public class RecipeService {
         return convertToDTO(recipeRepository.save(recipe));
     }
 
+    public List<RecipeSummaryResponse> getPublicRecipes() {
+        return recipeRepository.findByIsPublicTrue().stream()
+                .map(recipe -> new RecipeSummaryResponse(recipe.getId(), recipe.getName()))
+                .toList();
+    }
+
     private RecipeResponse convertToDTO(Recipe recipe) {
         List<RecipeIngredientResponse> ingredients = recipe.getIngredients().stream()
                 .map(ri -> new RecipeIngredientResponse(
