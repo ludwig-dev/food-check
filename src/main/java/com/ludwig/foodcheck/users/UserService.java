@@ -88,13 +88,10 @@ public class UserService {
         return true;
     }
 
-    public boolean deleteUserById(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return false;
-        User user = userOptional.get();
-        userRepository.delete(user);
-        return true;
+    public void deleteUserById(Long userId) {
+        if (!userRepository.existsById(userId))
+            throw new ResourceNotFoundException("User not found");
+        userRepository.deleteById(userId);
     }
 
     public List<UserDTO> searchByUsername(String username) {

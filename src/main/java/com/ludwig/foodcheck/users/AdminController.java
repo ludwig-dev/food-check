@@ -48,9 +48,9 @@ public class AdminController {
     @DeleteMapping("/delete-user")
     public ResponseEntity<String> deleteUser(@RequestBody Map<String, Long> requestBody) {
         Long userId = requestBody.get("id");
-        boolean isUpdated = userService.deleteUserById(userId);
-        if (!isUpdated)
-            return new ResponseEntity<>("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
+        userService.deleteUserById(userId);
+//        if (!isUpdated)
+//            return new ResponseEntity<>("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
 
         return new ResponseEntity<>("Deleted user with id: " + userId, HttpStatus.OK);
     }

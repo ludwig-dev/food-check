@@ -33,16 +33,11 @@ public class UserController {
         return userService.updateUser(userId, upd);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteUser(Authentication authentication) {
-
-        Long userId = Long.parseLong(authentication.getName());
-
-        boolean isUpdated = userService.deleteUserById(userId);
-        if (!isUpdated)
-            return new ResponseEntity<>("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
-
-        return new ResponseEntity<>("Deleted user with id " + userId, HttpStatus.OK);
+    @DeleteMapping("/me")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCurrentUser(Authentication auth) {
+        Long userId = requireAuth(auth);
+        userService.deleteUserById(userId);
     }
 
     private Long requireAuth(Authentication auth) {
