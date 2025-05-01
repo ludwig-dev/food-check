@@ -78,14 +78,11 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public boolean setUserRole(Long userId, String role) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return false;
-        User user = userOptional.get();
+    public UserDTO updateUserRole(Long userId, String role) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setRole(role);
-        userRepository.save(user);
-        return true;
+        return convertToDTO(userRepository.save(user));
     }
 
     public void deleteUserById(Long userId) {
