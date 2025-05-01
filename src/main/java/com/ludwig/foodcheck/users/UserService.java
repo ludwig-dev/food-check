@@ -65,28 +65,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean updateUsername(Long userId, String newUsername) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return false;
-
-        User user = userOptional.get();
-        user.setUsername(newUsername.toLowerCase());
-        userRepository.save(user);
-        return true;
-    }
-
-    public boolean updateEmail(Long userId, String newEmail) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return false;
-
-        User user = userOptional.get();
-        user.setEmail(newEmail.toLowerCase());
-        userRepository.save(user);
-        return true;
-    }
-
     public UserDTO getUserInfo(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->
