@@ -1,9 +1,12 @@
 package com.ludwig.foodcheck.users;
 
+import com.ludwig.foodcheck.exception.ResourceNotFoundException;
+import com.ludwig.foodcheck.util.EmailValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import com.ludwig.foodcheck.exception.BadRequestException;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +28,33 @@ public class UserService {
 
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmailIgnoreCase(email.toLowerCase());
+    }
+
+    public UserDTO updateUser(Long userId, UserUpdateDTO upd) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (upd.getUsername() != null) {
+            String name = upd.getUsername().trim().toLowerCase();
+            if (name.isEmpty())
+                throw new BadRequestException("Username cannot be empty");
+            if (userRepository.findByUsernameIgnoreCase(name).isPresent())
+                throw new BadRequestException("Username already taken");
+            user.setUsername(name);
+        }
+
+        if (upd.getEmail() != null) {
+            String email = upd.getEmail().trim().toLowerCase();
+            if (email.isEmpty())
+                throw new BadRequestException("Email cannot be empty");
+            if (!EmailValidator.isValid(email))
+                throw new BadRequestException("Invalid email format");
+            if (userRepository.findByEmailIgnoreCase(email).isPresent())
+                throw new BadRequestException("Email already taken");
+            user.setEmail(email);
+        }
+        User saved = userRepository.save(user);
+        return convertToDTO(saved);
     }
 
     public void registerNewUser(User user) {
