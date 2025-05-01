@@ -1,7 +1,9 @@
 package com.ludwig.foodcheck.users;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,10 +58,9 @@ public class UserService {
     }
 
     public UserDTO getUserInfo(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isEmpty())
-            return null;
-        User user = userOptional.get();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         return convertToDTO(user);
     }
 

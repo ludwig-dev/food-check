@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -14,11 +15,15 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-    private final JwtUtil jwtUtil;
 
-    public UserController(UserService userService, JwtUtil jwtUtil) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.jwtUtil = jwtUtil;
+    }
+
+    @GetMapping("/me")
+    public UserDTO getCurrentUser(Authentication authentication) {
+        Long userId = requireAuth(authentication);
+        return userService.getUserInfo(userId);
     }
 
     @PutMapping("/update/username")
@@ -70,20 +75,6 @@ public class UserController {
         return new ResponseEntity<>("Email updated successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/get/userinfo")
-    public ResponseEntity<?> getUserInfo(Authentication authentication) {
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(401).body("Unauthorized - Invalid Token");
-        }
-
-        Long userId = Long.parseLong(authentication.getName());
-        UserDTO userDTO = userService.getUserInfo(userId);
-        if (userDTO == null)
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-
-        return ResponseEntity.ok(userDTO);
-    }
-
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUser(Authentication authentication) {
 
@@ -94,6 +85,13 @@ public class UserController {
             return new ResponseEntity<>("Failed to delete user", HttpStatus.INTERNAL_SERVER_ERROR);
 
         return new ResponseEntity<>("Deleted user with id " + userId, HttpStatus.OK);
+    }
+
+    private Long requireAuth(Authentication auth) {
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        return Long.parseLong(auth.getName());
     }
 }
 
