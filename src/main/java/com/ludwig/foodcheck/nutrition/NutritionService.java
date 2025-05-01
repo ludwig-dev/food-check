@@ -25,6 +25,23 @@ public class NutritionService {
         Recipe recipe = getRecipeOrThrow(recipeId, userId);
         Map<String, NutritionResultDTO> totals = new HashMap<>();
 
+        return getNutritionResultDTOS(recipe, totals);
+    }
+
+    public List<NutritionResultDTO> calculateNutritionForPublicRecipes(Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .filter(Recipe::isPublic).orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
+        Map<String, NutritionResultDTO> totals = new HashMap<>();
+
+        if (!recipe.isPublic()) {
+            throw new ResourceNotFoundException("Recipe is not public");
+        }
+
+        return getNutritionResultDTOS(recipe, totals);
+
+    }
+
+    private List<NutritionResultDTO> getNutritionResultDTOS(Recipe recipe, Map<String, NutritionResultDTO> totals) {
         for (RecipeIngredient ingredient : recipe.getIngredients()) {
             int foodId = ingredient.getFood().getNummer();
             double amount = ingredient.getAmountInGrams();

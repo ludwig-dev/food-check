@@ -1,5 +1,7 @@
 package com.ludwig.foodcheck.recipe;
 
+import com.ludwig.foodcheck.nutrition.NutritionResultDTO;
+import com.ludwig.foodcheck.nutrition.NutritionService;
 import com.ludwig.foodcheck.recipe.dto.RecipeResponse;
 import com.ludwig.foodcheck.recipe.dto.RecipeSummaryResponse;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,11 @@ import java.util.List;
 public class PublicRecipeController {
 
     private final RecipeService recipeService;
+    private final NutritionService nutritionService;
 
-    public PublicRecipeController(RecipeService recipeService) {
+    public PublicRecipeController(RecipeService recipeService, NutritionService nutritionService) {
         this.recipeService = recipeService;
+        this.nutritionService = nutritionService;
     }
 
     @PutMapping("/{id}/publish")
@@ -34,5 +38,11 @@ public class PublicRecipeController {
     public ResponseEntity<RecipeResponse> getPublicRecipe(@PathVariable Long id) {
         RecipeResponse response = recipeService.getPublicRecipe(id);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/nutrition")
+    public ResponseEntity<List<NutritionResultDTO>> getNutrition(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(nutritionService.calculateNutritionForPublicRecipes(id));
     }
 }
