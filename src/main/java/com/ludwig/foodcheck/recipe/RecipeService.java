@@ -109,6 +109,12 @@ public class RecipeService {
         return convertToDTO(recipeRepository.save(recipe));
     }
 
+    public RecipeResponse setRecipeToPrivate(Long recipeId, Long userId) {
+        Recipe recipe = findRecipeById(recipeId, userId);
+        recipe.setPublic(false);
+        return convertToDTO(recipeRepository.save(recipe));
+    }
+
     public List<RecipeSummaryResponse> getPublicRecipes() {
         return recipeRepository.findByIsPublicTrue().stream()
                 .map(recipe -> new RecipeSummaryResponse(recipe.getId(), recipe.getName()))
