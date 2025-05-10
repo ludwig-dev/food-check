@@ -29,6 +29,12 @@ public class PublicRecipeController {
         return ResponseEntity.ok(recipeService.setRecipeToPublic(id, userId));
     }
 
+    @PutMapping("/{id}/private")
+    public ResponseEntity<RecipeResponse> setRecipeToPrivate(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return ResponseEntity.ok(recipeService.setRecipeToPrivate(id, userId));
+    }
+
     @GetMapping()
     public ResponseEntity<List<RecipeSummaryResponse>> getAllPublishedRecipes() {
         return ResponseEntity.ok(recipeService.getPublicRecipes());
