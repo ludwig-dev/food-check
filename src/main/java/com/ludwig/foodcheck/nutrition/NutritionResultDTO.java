@@ -13,6 +13,6 @@ public class NutritionResultDTO {
     private String namn;
     private double totaltVarde;
     private String enhet;
-    private Double procentAvRDI; // kan vara null om ej definierat
+    private Double procentAvRDI;
 }
 
