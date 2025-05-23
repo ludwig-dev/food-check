@@ -8,10 +8,10 @@ import com.ludwig.foodcheck.food.FoodRepository;
 import com.ludwig.foodcheck.users.UserRepository;
 import org.hibernate.sql.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
@@ -95,6 +95,35 @@ public class RecipeService {
         ingredient.setAmountInGrams(newAmount);
         return convertToDTO(recipeRepository.save(recipe));
     }
+
+    @Transactional
+    public RecipeResponse updateIngredientAmounts(
+            Long recipeId,
+            List<UpdateIngredientRequest> updates,
+            Long userId) {
+
+        Recipe recipe = findRecipeById(recipeId, userId);
+
+        for (UpdateIngredientRequest upd : updates) {
+            boolean found = false;
+            for (RecipeIngredient ri : recipe.getIngredients()) {
+                if (ri.getFood().getNummer() == upd.getFoodId()) {
+                    ri.setAmountInGrams(upd.getNewAmountInGrams());
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                throw new ResourceNotFoundException(
+                        "Food with ID: " + upd.getFoodId() + " not found"
+                );
+            }
+        }
+
+        return convertToDTO(recipeRepository.save(recipe));
+    }
+
+
 
     public UpdateRecipeNameDTO updateRecipeName(Long recipeId, String newName, Long userId) {
         Recipe recipe = findRecipeById(recipeId, userId);

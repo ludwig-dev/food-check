@@ -8,5 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateIngredientRequest {
+    private int foodId;
     private double newAmountInGrams;
 }

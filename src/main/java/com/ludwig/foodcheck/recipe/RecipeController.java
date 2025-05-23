@@ -90,6 +90,21 @@ public class RecipeController {
         return ResponseEntity.ok(recipeService.updateIngredientAmount(id, foodId, request.getNewAmountInGrams(), userId));
     }
 
+    @PutMapping("/{id}/ingredients")
+    public ResponseEntity<RecipeResponse> updateIngredientAmounts(
+            @PathVariable Long id,
+            @RequestBody BatchUpdateIngredientRequest request,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long userId = Long.parseLong(userDetails.getUsername());
+        RecipeResponse updated = recipeService.updateIngredientAmounts(
+                id,
+                request.getUpdates(),
+                userId
+        );
+        return ResponseEntity.ok(updated);
+    }
+
     @PutMapping("/{id}/rename")
     public ResponseEntity<UpdateRecipeNameDTO> updateRecipeName(
             @PathVariable Long id,
