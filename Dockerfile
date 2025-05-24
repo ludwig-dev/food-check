@@ -1,4 +1,4 @@
-# Use Java 21 runtime
+# Use Java 21 runtime, does not work with 23
 FROM openjdk:21-jdk-slim
 
 # Set a temporary volume
